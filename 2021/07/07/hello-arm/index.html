@@ -1,0 +1,355 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#0078E7"><meta name="author" content="Joeye"><meta name="copyright" content="Joeye"><meta name="generator" content="Hexo 5.4.0"><meta name="theme" content="hexo-theme-yun"><title>Hello ARM | null</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@900&amp;display=swap" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/star-markdown-css@0.1.25/dist/yun/yun-markdown.min.css"><script src="//at.alicdn.com/t/font_1140697_dxory92pb0h.js" async></script><script src="https://cdn.jsdelivr.net/npm/scrollreveal/dist/scrollreveal.min.js" defer></script><script>document.addEventListener("DOMContentLoaded", () => {
+  [".post-card",".post-content img"].forEach((target)=> {
+    ScrollReveal().reveal(target);
+  })
+});
+</script><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
+    const Yun = window.Yun || {};
+    window.CONFIG = {"hostname":"joeye153.github.io","root":"/","title":"盛业的小窝","version":"1.6.1","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="ARM入门，摘自azeria-labs ARM大小端模式 ARM中大部分指令都可以用作条件执行 x86和x86-64系列处理器使用小端地址格式 ARM架构在第三版以前是小端模式，之后变为大小端格式，允许大端或小端两种模式进行切换  ARM寄存器  ARM CPSR 寄存器  CPSR标志位  ARM指令基本格式MNEMONIC&amp;#123;S&amp;#125;&amp;#123;condition&amp;#125; &amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hello ARM">
+<meta property="og:url" content="http://joeye153.github.io/2021/07/07/hello-arm/index.html">
+<meta property="og:site_name">
+<meta property="og:description" content="ARM入门，摘自azeria-labs ARM大小端模式 ARM中大部分指令都可以用作条件执行 x86和x86-64系列处理器使用小端地址格式 ARM架构在第三版以前是小端模式，之后变为大小端格式，允许大端或小端两种模式进行切换  ARM寄存器  ARM CPSR 寄存器  CPSR标志位  ARM指令基本格式MNEMONIC&amp;#123;S&amp;#125;&amp;#123;condition&amp;#125; &amp;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/gQ1JnzNl6frTMOd.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/FXI6dowWlrvgDJH.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/vWSoy74HZRiBzAP.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/gKZS6CR52NVAqaQ.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/tS4f3wEWLDzmKO6.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/DgR7MWljXrmtbBf.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/KWc2h8qgxLvaTkm.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/m54YtSoinkcg2pq.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/zrOo8BGAMQLsRUN.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/7sFnr3AGeoWczKD.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/CE1oxe7GqRmFsLf.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/QKiu2OyAmaEMIoG.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/BtoQlyrjwvHqaJz.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/10/GbaTOjeVCUEkm1x.png">
+<meta property="og:image" content="https://i.loli.net/2021/07/07/BRw6GODEncIjUNF.gif">
+<meta property="article:published_time" content="2021-07-07T14:58:00.000Z">
+<meta property="article:modified_time" content="2020-07-10T15:59:59.000Z">
+<meta property="article:author" content="Joeye">
+<meta property="article:tag" content="ARM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/07/07/gQ1JnzNl6frTMOd.png"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Joeye"><img width="96" loading="lazy" src="/Yun.png" alt="Joeye"></a><div class="site-author-name"><a href="/about/">Joeye</a></div><span class="site-name"></span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">3</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">2</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">2</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://github.com/JOEYE153/joeye153.github.io" title="settings"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E5%A4%A7%E5%B0%8F%E7%AB%AF%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">ARM大小端模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">ARM寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM-CPSR-%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">ARM CPSR 寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CPSR%E6%A0%87%E5%BF%97%E4%BD%8D"><span class="toc-number">4.</span> <span class="toc-text">CPSR标志位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E6%8C%87%E4%BB%A4%E5%9F%BA%E6%9C%AC%E6%A0%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">ARM指令基本格式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="toc-number">6.</span> <span class="toc-text">ARM常用指令集</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E4%B8%AD%E7%9A%84%E6%9D%A1%E4%BB%B6%E7%8A%B6%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">ARM中的条件状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM-Data-Processing-Instruction"><span class="toc-number">8.</span> <span class="toc-text">ARM Data Processing Instruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">8.1.</span> <span class="toc-text">指令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4"><span class="toc-number">8.2.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0"><span class="toc-number">8.3.</span> <span class="toc-text">立即数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E7%9A%84%E6%9C%89%E6%95%88%E6%80%A7"><span class="toc-number">8.4.</span> <span class="toc-text">立即数的有效性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM-Data-Transfer-Instruction"><span class="toc-number">9.</span> <span class="toc-text">ARM Data Transfer Instruction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E6%A0%BC%E5%BC%8F-1"><span class="toc-number">9.1.</span> <span class="toc-text">指令格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4-1"><span class="toc-number">9.2.</span> <span class="toc-text">指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A0%81%E5%BD%A2%E5%BC%8F%E5%8F%8A%E7%AB%8B%E5%8D%B3%E6%95%B0%E5%AF%BB%E5%9D%80%E8%8C%83%E5%9B%B4"><span class="toc-number">9.3.</span> <span class="toc-text">编码形式及立即数寻址范围</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#post-index"><span class="toc-number">9.3.1.</span> <span class="toc-text">post-index</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pre-index"><span class="toc-number">9.3.2.</span> <span class="toc-text">pre-index</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#unsigned-offset"><span class="toc-number">9.3.3.</span> <span class="toc-text">unsigned offset</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E5%AE%9E%E4%BE%8B"><span class="toc-number">9.4.</span> <span class="toc-text">程序运行实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%AF%BB%E5%9D%80%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="toc-number">9.5.</span> <span class="toc-text">立即数作为寻址偏移量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E4%BD%9C%E4%B8%BA%E5%AF%BB%E5%9D%80%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="toc-number">9.6.</span> <span class="toc-text">寄存器作为寻址偏移量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%A9%E6%94%BE%E5%AF%84%E5%AD%98%E5%99%A8%E4%BD%9C%E4%B8%BA%E5%AF%BB%E5%9D%80%E5%81%8F%E7%A7%BB%E9%87%8F"><span class="toc-number">9.7.</span> <span class="toc-text">缩放寄存器作为寻址偏移量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PC%E7%9B%B8%E5%AF%B9%E5%AF%BB%E5%9D%80"><span class="toc-number">9.8.</span> <span class="toc-text">PC相对寻址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4"><span class="toc-number">10.</span> <span class="toc-text">ARM分支指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ARM%E4%B8%AD%E7%9A%84%E5%85%A5%E6%A0%88%E4%B8%8E%E5%87%BA%E6%A0%88"><span class="toc-number">11.</span> <span class="toc-text">ARM中的入栈与出栈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%B6%E5%AD%90%E5%87%BD%E6%95%B0%E4%B8%8E%E9%9D%9E%E5%8F%B6%E5%AD%90%E5%87%BD%E6%95%B0%E7%9A%84%E5%87%BD%E6%95%B0%E6%B1%87%E7%BC%96"><span class="toc-number">12.</span> <span class="toc-text">叶子函数与非叶子函数的函数汇编</span></a></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://joeye153.github.io/2021/07/07/hello-arm/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Joeye"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">Hello ARM</h1><div class="post-meta"><div class="post-time" style="display:inline-block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="Created: 2021-07-07 22:58:00" itemprop="dateCreated datePublished" datetime="2021-07-07T22:58:00+08:00">2021-07-07</time><span class="post-meta-divider">-</span><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-2-line"></use></svg></span> <time title="Modified: 2020-07-10 23:59:59" itemprop="dateModified" datetime="2020-07-10T23:59:59+08:00">2020-07-10</time></div><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E6%8A%80%E6%9C%AF/" style="--text-color:var(--hty-text-color)" itemprop="url" rel="index"><span itemprop="text">技术</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/ARM/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">ARM</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><p>ARM入门，摘自<a target="_blank" rel="noopener" href="https://azeria-labs.com/writing-arm-assembly-part-1/">azeria-labs</a></p>
+<h2 id="ARM大小端模式"><a href="#ARM大小端模式" class="headerlink" title="ARM大小端模式"></a>ARM大小端模式</h2><ul>
+<li>ARM中大部分指令都可以用作条件执行</li>
+<li>x86和x86-64系列处理器使用小端地址格式</li>
+<li>ARM架构在第三版以前是小端模式，之后变为大小端格式，允许大端或小端两种模式进行切换</li>
+</ul>
+<h2 id="ARM寄存器"><a href="#ARM寄存器" class="headerlink" title="ARM寄存器"></a>ARM寄存器</h2><img src="https://i.loli.net/2021/07/07/gQ1JnzNl6frTMOd.png" alt="arm-x86-register" style="zoom:67%;" / loading="lazy">
+
+<h2 id="ARM-CPSR-寄存器"><a href="#ARM-CPSR-寄存器" class="headerlink" title="ARM CPSR 寄存器"></a>ARM CPSR 寄存器</h2><img src="https://i.loli.net/2021/07/07/FXI6dowWlrvgDJH.png" alt="arm-CPSR" style="zoom:67%;" / loading="lazy">
+
+<h2 id="CPSR标志位"><a href="#CPSR标志位" class="headerlink" title="CPSR标志位"></a>CPSR标志位</h2><img src="https://i.loli.net/2021/07/07/vWSoy74HZRiBzAP.png" alt="arm-CPSR_Flag_Description" style="zoom:67%;" / loading="lazy">
+
+<h2 id="ARM指令基本格式"><a href="#ARM指令基本格式" class="headerlink" title="ARM指令基本格式"></a>ARM指令基本格式</h2><pre><code class="assembly">MNEMONIC&#123;S&#125;&#123;condition&#125; &#123;Rd&#125;, Operand1, Operand2
+</code></pre>
+<p>其中指令中各字段含义为</p>
+<pre><code class="assembly">MNEMONIC     - 操作指令（机器码对应的助记符）。
+&#123;S&#125;          - 可选后缀. 如果指定了该后缀，那么条件标志将根据操作结果进行更新。
+&#123;condition&#125;  - 执行指令所需满足的条件。
+&#123;Rd&#125;         - 目标寄存器，存储操作结果。
+Operand1     - 第一操作数（寄存器或者立即数）
+Operand2     - 第二操作数. 立即数或者带有位移操作后缀（可选）的寄存器。
+</code></pre>
+<p><code>Operand2</code>可以为</p>
+<pre><code>#123                    - 立即数。
+Rx                      - 寄存器x (如 R1, R2, R3 ...)。
+Rx, ASR n               - 寄存器x，算术右移n位 (1 = n = 32)。
+Rx, LSL n               - 寄存器x，逻辑左移n位 (0 = n = 31)。
+Rx, LSR n               - 寄存器x，逻辑右移n位 (1 = n = 32)。
+Rx, ROR n               - 寄存器x，循环右移n位 (1 = n = 31)。
+Rx, RRX                 - 寄存器x，扩展的循环位移，右移1位。
+</code></pre>
+<p>指令例子：</p>
+<pre><code>ADD   R0, R1, R2         - 将寄存器R1内的值与寄存器R2内的值相加，结果存储到R0。
+ADD   R0, R1, #2         - 将寄存器R1内的值加上立即数2，结果存储到R0。
+MOVLE R0, #5             - 仅当满足条件LE（小于或等于）时，才将立即数5移动到R0（编译器会把它看作MOVLE R0, R0, #5）。
+MOV   R0, R1, LSL #1     - 将寄存器R1的内容向左移动一位然后移动到R0（Rd）。因此，如果R1值是2，它将向左移动一位，并变为4。然后将4移动到R0。
+</code></pre>
+<h2 id="ARM常用指令集"><a href="#ARM常用指令集" class="headerlink" title="ARM常用指令集"></a>ARM常用指令集</h2><img src="https://i.loli.net/2021/07/07/gKZS6CR52NVAqaQ.png" alt="arm-instruction-description" style="zoom:67%;" / loading="lazy">
+
+<h2 id="ARM中的条件状态"><a href="#ARM中的条件状态" class="headerlink" title="ARM中的条件状态"></a>ARM中的条件状态</h2><p><img src="https://i.loli.net/2021/07/07/tS4f3wEWLDzmKO6.png" alt="arm-condition" loading="lazy"></p>
+<h2 id="ARM-Data-Processing-Instruction"><a href="#ARM-Data-Processing-Instruction" class="headerlink" title="ARM Data Processing Instruction"></a>ARM Data Processing Instruction</h2><h3 id="指令格式"><a href="#指令格式" class="headerlink" title="指令格式"></a>指令格式</h3><p><img src="https://i.loli.net/2021/07/10/DgR7MWljXrmtbBf.png" alt="arm-data-processing-instruction" loading="lazy"></p>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><p><img src="https://i.loli.net/2021/07/10/KWc2h8qgxLvaTkm.png" alt="arm-data-processing-ins-opcode" loading="lazy"></p>
+<h3 id="立即数"><a href="#立即数" class="headerlink" title="立即数"></a>立即数</h3><p><img src="https://i.loli.net/2021/07/07/m54YtSoinkcg2pq.png" alt="arm-32bit" loading="lazy"></p>
+<p>其中24-21位表示opcode，25位如果为0，操作数2（Operand 2）为寄存器；如果为1，操作数2（Operand 2）为立即数</p>
+<p>如果为立即数，11-8位表示旋转循环右移量，7-0位表示立即数：</p>
+<p><img src="https://i.loli.net/2021/07/07/zrOo8BGAMQLsRUN.png" alt="arm-immediate" loading="lazy"></p>
+<p>设7-0位表示的数为<code>n</code>，旋转循环右移为<code>r</code>，最后的立即数的表示形式为<code>v = n ror 2*r</code>，即只能以偶数进行旋转循环右移，一次移动两位，<code>n</code>组成的有效位图必须能放到一个字节（8位）中</p>
+<img src="https://i.loli.net/2021/07/07/7sFnr3AGeoWczKD.png" alt="arm-immediate-ror" style="zoom:67%;" / loading="lazy">
+
+<h3 id="立即数的有效性"><a href="#立即数的有效性" class="headerlink" title="立即数的有效性"></a>立即数的有效性</h3><pre><code>Valid values:
+#256        @ 1 ror 24 --&gt; 256  循环右移12次，每次两位(注意数据是32位长度)。
+#384        @ 6 ror 26 --&gt; 384  循环右移13次，每次两位。
+#484        @ 121 ror 30 --&gt; 484
+#16384      @ 1 ror 18 --&gt; 16384
+#2030043136 @ 121 ror 8 --&gt; 2030043136
+#0x06000000 @ 6 ror 8 --&gt; 100663296 (0x06000000 in hex)
+
+Invalid values:
+#370        @ 185 ror 31 --&gt; 循环右移31位，但超出了(0 – 30)范围，因此不是有效立即数。
+#511        @ 1 1111 1111 --&gt; 有效位图无法放到一个字节（8位）中。
+#0x06010000 @ 110 0000 0001.. --&gt; 有效位图无法放到一个字节（8位）中。
+</code></pre>
+<p>当想要加载的立即数无效时，可以通过两种方式解决：</p>
+<ul>
+<li>用较小的值构造较大的值，e.g.</li>
+</ul>
+<p><code>MOV r0, #511</code> </p>
+<p>转换为</p>
+<p><code>MOV r0, #256</code></p>
+<p><code>ADD r0, #255</code></p>
+<ul>
+<li>使用加载方式<code>ldr r1, =value</code>，然后由编译器转换为<code>MOV</code>指令或者<code>PC</code>相对寻址加载，e.g.</li>
+</ul>
+<p><code>LDR r1, =511</code></p>
+<p>如果加载无效的立即数，编译器会报错<code>Error: invalid constant</code></p>
+<p>判断是否立即数是否有效：</p>
+<pre><code class="c++">// arg: im
+for (int i = 0; i &lt; 32; i += 2) &#123;
+        unsigned int tmp = im &lt;&lt; i;
+        tmp |= (im &amp; (0xffffffff &lt;&lt; (32 - i))) &gt;&gt; (32 - i);
+        if (tmp &lt;= 0x000000ff) &#123;
+            return true;
+        &#125;
+    &#125;
+return false;
+</code></pre>
+<h2 id="ARM-Data-Transfer-Instruction"><a href="#ARM-Data-Transfer-Instruction" class="headerlink" title="ARM Data Transfer Instruction"></a>ARM Data Transfer Instruction</h2><h3 id="指令格式-1"><a href="#指令格式-1" class="headerlink" title="指令格式"></a>指令格式</h3><p><img src="https://i.loli.net/2021/07/10/CE1oxe7GqRmFsLf.png" alt="arm-data-transfer-instruction" loading="lazy"></p>
+<h3 id="指令-1"><a href="#指令-1" class="headerlink" title="指令"></a>指令</h3><table>
+<thead>
+<tr>
+<th>Instruction</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ldr</td>
+<td>Load Word</td>
+</tr>
+<tr>
+<td>ldrh</td>
+<td>Load unsigned Half Word</td>
+</tr>
+<tr>
+<td>ldrsh</td>
+<td>Load signed Half Word</td>
+</tr>
+<tr>
+<td>ldrb</td>
+<td>Load unsigned Byte</td>
+</tr>
+<tr>
+<td>ldrsb</td>
+<td>Load signed Bytes</td>
+</tr>
+<tr>
+<td>str</td>
+<td>Store Word</td>
+</tr>
+<tr>
+<td>strh</td>
+<td>Store unsigned Half Word</td>
+</tr>
+<tr>
+<td>strsh</td>
+<td>Store signed Half Word</td>
+</tr>
+<tr>
+<td>strb</td>
+<td>Store unsigned Byte</td>
+</tr>
+<tr>
+<td>strsb</td>
+<td>Store signed Byte</td>
+</tr>
+</tbody></table>
+<h3 id="编码形式及立即数寻址范围"><a href="#编码形式及立即数寻址范围" class="headerlink" title="编码形式及立即数寻址范围"></a>编码形式及立即数寻址范围</h3><p>数据存取指令（Data Transfer Instruction）分为 post-index, pre-index 和 unsigned offset 三种编码形式</p>
+<h4 id="post-index"><a href="#post-index" class="headerlink" title="post-index"></a>post-index</h4><p>指令为</p>
+<pre><code>ldr &lt;Xt|Wt&gt;, [&lt;Xn|SP&gt;], #&lt;simm&gt;
+</code></pre>
+<p>编码为</p>
+<p><img src="https://i.loli.net/2021/07/10/QKiu2OyAmaEMIoG.png" alt="ldr-post-index" loading="lazy"></p>
+<p>立即数范围在[-256, 255]</p>
+<h4 id="pre-index"><a href="#pre-index" class="headerlink" title="pre-index"></a>pre-index</h4><p>指令为</p>
+<pre><code>ldr &lt;Xt|Wt&gt;, [&lt;Xn|SP&gt; &#123;, #&lt;simm&gt;&#125;]
+</code></pre>
+<p>编码为</p>
+<p><img src="https://i.loli.net/2021/07/10/BtoQlyrjwvHqaJz.png" alt="ldr-pre-index" loading="lazy"></p>
+<p>立即数范围在[-256, 255]</p>
+<h4 id="unsigned-offset"><a href="#unsigned-offset" class="headerlink" title="unsigned offset"></a>unsigned offset</h4><p>指令为</p>
+<pre><code>ldr &lt;Xt|Wt&gt;, [&lt;Xn|SP&gt; &#123;, #&lt;pimm&gt;&#125;]
+</code></pre>
+<p>编码为</p>
+<p><img src="https://i.loli.net/2021/07/10/GbaTOjeVCUEkm1x.png" alt="ldr-unsigned-im" loading="lazy"></p>
+<p>立即数范围在[0, 4095]</p>
+<h3 id="程序运行实例"><a href="#程序运行实例" class="headerlink" title="程序运行实例"></a>程序运行实例</h3><pre><code class="assembly">.data          /*.data段是动态创建的，无法预测 */
+var1: .word 3  /* 内存中的变量var1=3*/
+var2: .word 4  /* 内存中的变量var2=4*/
+
+.text          /* 代码段开始位置 */ 
+.global _start
+
+_start:
+    ldr r0, adr_var1  @ 通过标签adr_var1获得变量var1的地址，并加载到R0。
+    ldr r1, adr_var2  @ 通过标签adr_var2获得变量var2的地址，并加载到R1。
+    ldr r2, [r0]      @ 通过R0内的地址获取到该地址处的值（0x03)，加载到R2。
+    str r2, [r1]      @ 将R2内的值（0x03）存储到R1中的地址处。 
+    bkpt              @ 软件断点中断
+
+adr_var1: .word var1  /* 变量var1的地址位置 */
+adr_var2: .word var2  /* 变量var2的地址位置 */
+</code></pre>
+<ul>
+<li>使用<code>[]</code>符号：取寄存器中的值作为地址值，然后再从该地址处加载数据到目标寄存器中</li>
+<li>如果不使用<code>[]</code>：将寄存器中保存的值直接加载到目标寄存器。</li>
+</ul>
+<p><img src="https://i.loli.net/2021/07/07/BRw6GODEncIjUNF.gif" alt="arm-assemble-program-run" loading="lazy"></p>
+<h3 id="立即数作为寻址偏移量"><a href="#立即数作为寻址偏移量" class="headerlink" title="立即数作为寻址偏移量"></a>立即数作为寻址偏移量</h3><pre><code>STR    Ra, [Rb, imm]
+LDR    Ra, [Rc, imm]
+</code></pre>
+<p>e.g.</p>
+<pre><code class="assembly">.data
+var1: .word 3
+var2: .word 4
+
+.text
+.global _start
+
+_start:
+    ldr r0, adr_var1  @ 通过标签adr_var1获得变量var1的地址，并加载到R0。
+    ldr r1, adr_var2  @ 通过标签adr_var2获得变量var2的地址，并加载到R1。
+    ldr r2, [r0]      @ 通过R0内的地址获取到该地址处的值（0x03)，加载到R2。 
+    str r2, [r1, #2]  @ 以R1中的值为基准加上立即数2作为最终地址，将R2中的值（0x03）存储到该地址处，其中R1中的值不会被修改。 
+    str r2, [r1, #4]! @ 前变址寻址：以R1中的值为基准加上立即数4作为最终地址，将R2中的值（0x03）存储到该地址处，其中R1中的值被修改为：R1+4。 
+    ldr r3, [r1], #4  @ 后变址寻址：将R1中的值作为最终地址，获取该地址处的数据加载到R3，其中R1中的值被修改为：R1+4。
+    bkpt              @ 软件断点中断
+
+adr_var1: .word var1
+adr_var2: .word var2
+</code></pre>
+<h3 id="寄存器作为寻址偏移量"><a href="#寄存器作为寻址偏移量" class="headerlink" title="寄存器作为寻址偏移量"></a>寄存器作为寻址偏移量</h3><pre><code>STR    Ra, [Rb, Rc]
+LDR    Ra, [Rb, Rc]
+</code></pre>
+<p>e.g.</p>
+<pre><code class="assembly">.data
+var1: .word 3
+var2: .word 4
+
+.text
+.global _start
+
+_start:
+    ldr r0, adr_var1  @ 通过标签adr_var1获得变量var1的地址，并加载到R0。
+    ldr r1, adr_var2  @ 通过标签adr_var2获得变量var2的地址，并加载到R1。
+    ldr r2, [r0]      @ 通过R0内的地址获取到该地址处的值（0x03)，加载到R2。 
+    str r2, [r1, r2]  @ 以R1中的值为基准地址，R2中的值（0x03）为偏移量，获得最终访问地址，将R2中的值（0x03）存储到该地址处，基准寄存器R1中的值保存不变。
+    str r2, [r1, r2]! @ 前变址寻址：以R1中的值为基准地址，R2中的值（0x03）为偏移量，获得最终访问地址，将R2中的值（0x03）存储到该地址处，基准寄存器R1中的值更新为R1+R2。 
+    ldr r3, [r1], r2  @ 后变址寻址：以R1中的值为最终访问地址，获取该地址处的数据并加载到R3，基准寄存器R1中的值更新为R1+R2。
+    bx lr
+
+adr_var1: .word var1
+adr_var2: .word var2
+</code></pre>
+<h3 id="缩放寄存器作为寻址偏移量"><a href="#缩放寄存器作为寻址偏移量" class="headerlink" title="缩放寄存器作为寻址偏移量"></a>缩放寄存器作为寻址偏移量</h3><pre><code>LDR    Ra, [Rb, Rc, &lt;shifter&gt;]
+STR    Ra, [Rb, Rc, &lt;shifter&gt;]
+</code></pre>
+<p>e.g.</p>
+<pre><code class="assembly">.data
+var1: .word 3
+var2: .word 4
+
+.text
+.global _start
+
+_start:
+    ldr r0, adr_var1  @ 通过标签adr_var1获得变量var1的地址，并加载到R0。
+    ldr r1, adr_var2  @ 通过标签adr_var2获得变量var2的地址，并加载到R1。
+    ldr r2, [r0]      @ 通过R0内的地址获取到该地址处的值（0x03)，加载到R2。 
+    str r2, [r1, r2, LSL#2]  @ 以R2中的值左移2位（相当于乘以4）为偏移量，加上R1中的基准地址获得最终访问地址，将R2中的值（0x03)存储到该地址，基准寄存器R1中的值不变。
+    str r2, [r1, r2, LSL#2]! @ 以R2中的值左移2位（相当于乘以4）为偏移量，加上R1中的基准地址获得最终结果地址，将R2中的值（0x03)存储到该地址，基准寄存器R1中的值被修改: R1 = R1 + R2&lt;&lt;2
+    ldr r3, [r1], r2, LSL#2  @ 以R1中的值为访问地址，加载该地址处的数据到R3，基准寄存器R1中的值被修改: R1 = R1 + R2&lt;&lt;2
+    bkpt              @ 软件断点中断
+
+adr_var1: .word var1
+adr_var2: .word var2
+</code></pre>
+<h3 id="PC相对寻址"><a href="#PC相对寻址" class="headerlink" title="PC相对寻址"></a>PC相对寻址</h3><pre><code class="assembly">.section .text
+.global _start
+
+_start:
+   ldr r0, =jump        @ 加载函数标签jump的地址到R0 
+   ldr r1, =0x68DB00AD  @ 加载值0x68DB00AD到R1 
+jump:
+   ldr r2, =511         @ 加载值511到R2 
+   bkpt                    @ 软件断点中断
+</code></pre>
+<h2 id="ARM分支指令"><a href="#ARM分支指令" class="headerlink" title="ARM分支指令"></a>ARM分支指令</h2><ul>
+<li><p>普通分支：B</p>
+<ul>
+<li>简单地跳转到一个函数</li>
+</ul>
+</li>
+<li><p>带链接的跳转：BL</p>
+<ul>
+<li>将PC+4的值保存到LR寄存器中，然后跳转</li>
+</ul>
+</li>
+<li><p>带状态切换的跳转：BX，带状态切换及链接的跳转：BLX</p>
+<ul>
+<li>与B和BL一致，只是添加了工作状态的切换（ARM模式-Thumb模式）</li>
+<li>需要寄存器作为第一个操作数</li>
+<li>e.g.</li>
+</ul>
+<pre><code class="assembly">.text
+.global _start
+
+_start:
+     .code 32         @ ARM mode
+     add r2, pc, #1   @ put PC+1 into R2
+     bx r2            @ 跳转至R2中存储的PC地址
+
+    .code 16          @ Thumb mode
+     mov r0, #1
+</code></pre>
+</li>
+</ul>
+<h2 id="ARM中的入栈与出栈"><a href="#ARM中的入栈与出栈" class="headerlink" title="ARM中的入栈与出栈"></a>ARM中的入栈与出栈</h2><ul>
+<li>PUSH<ul>
+<li>首先将SP寄存器中的地址减少4（4字节，即32位）</li>
+<li>然后将数据存储至SP的新地址值处</li>
+</ul>
+</li>
+<li>POP<ul>
+<li>首先当前SP中地址处的数据加载到指定的寄存器中</li>
+<li>然后将SP中的地址值加4</li>
+</ul>
+</li>
+</ul>
+<h2 id="叶子函数与非叶子函数的函数汇编"><a href="#叶子函数与非叶子函数的函数汇编" class="headerlink" title="叶子函数与非叶子函数的函数汇编"></a>叶子函数与非叶子函数的函数汇编</h2><pre><code class="assembly">.global main
+
+main:
+    push   &#123;r11, lr&#125;    @ 开始，栈帧指针和LR分别入栈 
+    add    r11, sp, #0  @ 设置栈帧的底部（译注：其实是将sp的值给R11，栈指针指向初始的栈帧指针位置（栈帧底部）） 
+    sub    sp, sp, #16  @ 在栈上分配一些内存作为接下来局部变量要用的缓存区（译注：栈指针减16，相当于将栈帧指针往下移动了16字节）） 
+    mov    r0, #1       @ 设置局部变量 (a=1). 同时也为函数max准备参数a 
+    mov    r1, #2       @ 设置局部变量 (b=2). 同时也为函数max准备参数b 
+    bl     max          @ 跳转到函数max 
+    sub    sp, r11, #0  @ 重新调整栈指针 
+    pop    &#123;r11, pc&#125;    @ 恢复栈帧指针, 通过加载之前保存的LR到PC，程序跳转到之前LR保存位置 
+
+max:
+    push   &#123;r11&#125;        @ 开始，栈帧指针入栈 
+    add    r11, sp, #0  @ 设置栈帧底部 
+    sub    sp, sp, #12  @ 栈指针减12，分配栈内存 
+    cmp    r0, r1       @ 比较R0和R1(a和b) 
+    movlt  r0, r1       @ 如果R0&lt;R1, 将R1存储到R0 
+    add    sp, r11, #0  @ 收尾，调整栈指针 
+    pop    &#123;r11&#125;        @ 恢复栈帧指针 
+    bx     lr           @ 通过寄存器LR跳转到main函数 
+</code></pre>
+</div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>Joeye</li><li class="post-copyright-link"><strong>Post link: </strong><a href="http://joeye153.github.io/2021/07/07/hello-arm/" title="Hello ARM">http://joeye153.github.io/2021/07/07/hello-arm/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> unless otherwise stated.</li></ul></section></article><div class="post-nav"><div class="post-nav-item"><a class="post-nav-prev" href="/2021/07/10/gdb/" rel="prev" title="GNU roject Debugger"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-left-s-line"></use></svg><span class="post-nav-text">GNU roject Debugger</span></a></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/06/30/hello-world/" rel="next" title="Hello World"><span class="post-nav-text">Hello World</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> Joeye</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v5.4.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.1</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div></body></html>
