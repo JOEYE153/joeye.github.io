@@ -8,18 +8,217 @@
 });</script><link rel="icon" href="/yun.svg"><link rel="mask-icon" href="/yun.svg" color="#0078E7"><link rel="alternate icon" href="/yun.ico"><link rel="preload" href="/css/hexo-theme-yun.css" as="style"><link rel="preload" href="/js/utils.js" as="script"><link rel="preload" href="/js/hexo-theme-yun.js" as="script"><link rel="prefetch" href="/js/sidebar.js" as="script"><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><script id="yun-config">
     const Yun = window.Yun || {};
     window.CONFIG = {"hostname":"joeye153.github.io","root":"/","title":"盛业的小窝","version":"1.6.1","mode":"auto","copycode":true,"page":{"isPost":true},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}.","hits":"${hits} results found","hits_time":"${hits} results found in ${time} ms"},"anonymous_image":"https://cdn.jsdelivr.net/gh/YunYouJun/cdn/img/avatar/none.jpg","say":{"api":"https://v1.hitokoto.cn","hitokoto":true},"fireworks":{"colors":["102, 167, 221","62, 131, 225","33, 78, 194"]}};
-  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="测试行内公式 $\delta_2 &#x3D; 2^3$  测试块公式 $$ E&#x3D;mc^2 \sum_2 &#x3D; 2 $$$$E &#x3D; mc^2$$">
+  </script><link rel="stylesheet" href="/css/hexo-theme-yun.css"><script src="/js/utils.js"></script><script src="/js/hexo-theme-yun.js"></script><meta name="description" content="DL Intro主要参考：2021李宏毅ML 1. From Activation Function to Deep Neural NetworkMachine Learning &#x3D; Looking for function Regression: outputs a scalar Classification: outputs the correct one Sigmoid Function(S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DL Intro">
 <meta property="og:url" content="http://joeye153.github.io/2021/10/14/DL-Intro/index.html">
 <meta property="og:site_name">
-<meta property="og:description" content="测试行内公式 $\delta_2 &#x3D; 2^3$  测试块公式 $$ E&#x3D;mc^2 \sum_2 &#x3D; 2 $$$$E &#x3D; mc^2$$">
+<meta property="og:description" content="DL Intro主要参考：2021李宏毅ML 1. From Activation Function to Deep Neural NetworkMachine Learning &#x3D; Looking for function Regression: outputs a scalar Classification: outputs the correct one Sigmoid Function(S">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/O8Sx3YweLdEj6Gk.png">
+<meta property="og:image" content="https://i.loli.net/2021/10/08/UDYgLIaCQ7OoiR8.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/AOvioSgJMhr3Xke.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/tghqnSZjzdFk3lY.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/6bHfoGcWuilUNA3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/Qw3nRCazyeBojDT.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/auP8TIqScZH7Glh.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211011110817342.png?token=AKP436JD6YTRKW4QARH3KQ3BMOWWI">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211011112107779.png?token=AKP436J4WMTVIKNNNHVDDGLBMOW54">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014145315230.png?token=AKP436NCNBDQXX65GL6XSITBM7KBC">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014155125918.png?token=AKP436N7HOY2NEJF6G6DSW3BM7Q3K">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014163119916.png?token=AKP436NX3MSMQBZB64M2DW3BM7VQ4">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014163534126.png?token=AKP436KAW2BUJ6Q6MDMBLT3BM7WA2">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014170624544.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014170719869.png">
 <meta property="article:published_time" content="2021-10-14T11:54:09.000Z">
-<meta property="article:modified_time" content="2021-10-14T13:47:37.028Z">
+<meta property="article:modified_time" content="2021-10-14T13:57:19.072Z">
 <meta property="article:author" content="Joeye">
 <meta property="article:tag" content="DL">
-<meta name="twitter:card" content="summary"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button" data-target="post-toc-wrap" title="Table of Contents"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button sidebar-nav-active" data-target="site-overview-wrap" title="Overview"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel sidebar-panel-active" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Joeye"><img width="96" loading="lazy" src="/Yun.png" alt="Joeye"></a><div class="site-author-name"><a href="/about/">Joeye</a></div><span class="site-name"></span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://github.com/JOEYE153/joeye153.github.io" title="settings"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content">This post does not have a Table of Contents</div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://joeye153.github.io/2021/10/14/DL-Intro/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Joeye"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">DL Intro</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="Created: 2021-10-14 19:54:09" itemprop="dateCreated datePublished" datetime="2021-10-14T19:54:09+08:00">2021-10-14</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="Word count in article"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="Word count in article">22</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="Reading time"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="Reading time">1m</span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E7%AC%94%E8%AE%B0/" style="--text-color:dimgray" itemprop="url" rel="index"><span itemprop="text">笔记</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/DL/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">DL</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><p>测试行内公式 $\delta_2 = 2^3$ </p>
-<p>测试块公式</p>
-<p>$$ E=mc^2 \sum_2 = 2 $$<br>$$<br>E = mc^2<br>$$</p>
-</div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>Joeye</li><li class="post-copyright-link"><strong>Post link: </strong><a href="http://joeye153.github.io/2021/10/14/DL-Intro/" title="DL Intro">http://joeye153.github.io/2021/10/14/DL-Intro/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> unless otherwise stated.</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/09/26/retest/" rel="next" title="BUAA SCSE 数理及核专笔记"><span class="post-nav-text">BUAA SCSE 数理及核专笔记</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> Joeye</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v5.4.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.1</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div></body></html>
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/JOEYE153/Images/master/O8Sx3YweLdEj6Gk.png"><script src="/js/ui/mode.js"></script></head><body><script defer src="https://cdn.jsdelivr.net/npm/animejs@latest"></script><script defer src="/js/ui/fireworks.js"></script><canvas class="fireworks"></canvas><div class="container"><a class="sidebar-toggle hty-icon-button" id="menu-btn"><div class="hamburger hamburger--spin" type="button"><span class="hamburger-box"><span class="hamburger-inner"></span></span></div></a><div class="sidebar-toggle sidebar-overlay"></div><aside class="sidebar"><script src="/js/sidebar.js"></script><ul class="sidebar-nav"><li class="sidebar-nav-item sidebar-nav-toc hty-icon-button sidebar-nav-active" data-target="post-toc-wrap" title="Table of Contents"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-list-ordered"></use></svg></li><li class="sidebar-nav-item sidebar-nav-overview hty-icon-button" data-target="site-overview-wrap" title="Overview"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-passport-line"></use></svg></li></ul><div class="sidebar-panel" id="site-overview-wrap"><div class="site-info fix-top"><a class="site-author-avatar" href="/about/" title="Joeye"><img width="96" loading="lazy" src="/Yun.png" alt="Joeye"></a><div class="site-author-name"><a href="/about/">Joeye</a></div><span class="site-name"></span><sub class="site-subtitle"></sub><div class="site-desciption"></div></div><nav class="site-state"><a class="site-state-item hty-icon-button icon-home" href="/" title="Home"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-home-4-line"></use></svg></span></a><div class="site-state-item"><a href="/archives/" title="Archives"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-archive-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><div class="site-state-item"><a href="/categories/" title="Categories"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-2-line"></use></svg></span><span class="site-state-item-count">4</span></a></div><div class="site-state-item"><a href="/tags/" title="Tags"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="site-state-item-count">6</span></a></div><a class="site-state-item hty-icon-button" target="_blank" rel="noopener" href="https://github.com/JOEYE153/joeye153.github.io" title="settings"><span class="site-state-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-settings-line"></use></svg></span></a></nav><hr style="margin-bottom:0.5rem"><br><a class="links-item hty-icon-button" id="toggle-mode-btn" href="javascript:;" title="Mode" style="color: #f1cb64"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-contrast-2-line"></use></svg></a></div><div class="sidebar-panel sidebar-panel-active" id="post-toc-wrap"><div class="post-toc"><div class="post-toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DL-Intro"><span class="toc-number">1.</span> <span class="toc-text">DL Intro</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-From-Activation-Function-to-Deep-Neural-Network"><span class="toc-number">1.1.</span> <span class="toc-text">1. From Activation Function to Deep Neural Network</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Optimization"><span class="toc-number">1.2.</span> <span class="toc-text">2. Optimization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Loss-Function"><span class="toc-number">1.3.</span> <span class="toc-text">3. Loss Function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Regularization"><span class="toc-number">1.4.</span> <span class="toc-text">4. Regularization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-L1-amp-L2-regularization-Weight-Decay"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 L1 &amp; L2 regularization | Weight Decay</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-Data-Argumentation"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 Data Argumentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-Dropout-amp-DropConnect-amp-DropBlock"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 Dropout &amp; DropConnect &amp; DropBlock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-Early-Stopping"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 Early Stopping</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Normalization"><span class="toc-number">1.5.</span> <span class="toc-text">5. Normalization</span></a></li></ol></li></ol></div></div></div></aside><main class="sidebar-translate" id="content"><div id="post"><article class="hty-card post-block" itemscope itemtype="https://schema.org/Article"><link itemprop="mainEntityOfPage" href="http://joeye153.github.io/2021/10/14/DL-Intro/"><span hidden itemprop="author" itemscope itemtype="https://schema.org/Person"><meta itemprop="name" content="Joeye"><meta itemprop="description"></span><span hidden itemprop="publisher" itemscope itemtype="https://schema.org/Organization"><meta itemprop="name"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">DL Intro</h1><div class="post-meta"><div class="post-time" style="display:block"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-calendar-line"></use></svg></span> <time title="Created: 2021-10-14 19:54:09" itemprop="dateCreated datePublished" datetime="2021-10-14T19:54:09+08:00">2021-10-14</time></div><span class="post-count"><span class="post-symbolcount"><span class="post-meta-item-icon" title="Word count in article"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-file-word-line"></use></svg></span> <span title="Word count in article">2.4k</span><span class="post-meta-divider">-</span><span class="post-meta-item-icon" title="Reading time"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-timer-line"></use></svg></span> <span title="Reading time">10m</span></span></span><div class="post-classify"><span class="post-category"> <span class="post-meta-item-icon" style="margin-right:3px;"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-folder-line"></use></svg></span><span itemprop="about" itemscope itemtype="https://schema.org/Thing"><a class="category-item" href="/categories/%E7%AC%94%E8%AE%B0/" style="--text-color:dimgray" itemprop="url" rel="index"><span itemprop="text">笔记</span></a></span></span><span class="post-tag"><span class="post-meta-divider">-</span><a class="tag-item" href="/tags/DL/" style="--text-color:var(--hty-text-color)"><span class="post-meta-item-icon"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-price-tag-3-line"></use></svg></span><span class="tag-name">DL</span></a></span></div></div></header><section class="post-body" itemprop="articleBody"><div class="post-content markdown-body" style="--smc-primary:#0078E7;"><h1 id="DL-Intro"><a href="#DL-Intro" class="headerlink" title="DL Intro"></a>DL Intro</h1><p>主要参考：<a target="_blank" rel="noopener" href="https://speech.ee.ntu.edu.tw/~hylee/ml/2021-spring.html">2021李宏毅ML</a></p>
+<h2 id="1-From-Activation-Function-to-Deep-Neural-Network"><a href="#1-From-Activation-Function-to-Deep-Neural-Network" class="headerlink" title="1. From Activation Function to Deep Neural Network"></a>1. From Activation Function to Deep Neural Network</h2><p>Machine Learning = Looking for function</p>
+<p>Regression: outputs a scalar</p>
+<p>Classification: outputs the correct one</p>
+<p>Sigmoid Function(S型曲线)：<br>$$<br>y = c\frac{1}{1+e^{-(b+wx_1)}} = c\cdot sigmoid(b+wx_1)=c\cdot\sigma(r)<br>$$</p>
+<ul>
+<li>改变$w$：改变曲线的坡度（slope）</li>
+<li>改变$b$：左右移动曲线（shift）</li>
+<li>改变$c$​​：改变高度（height）$0&lt;y\leq c$​</li>
+<li>通过多个sigmoid function（单个feature）求和拟合曲线：$y = b+\sum_i c_i\sigma(b_i+w_ix_1)$​</li>
+</ul>
+<p>多个feature下的Sigmoid Function求和：<br>$$<br>y=b+\sum_ic_i\cdot sigmoid(b_i+\sum_jw_{ij}x_j)=b+\sum_ic_i\cdot\sigma(b_i+\sum_jw_{ij}x_j)<br>$$<br>转换为矩阵形式：<br>$$<br>y = b_0 + c^T\sigma(b+Wx)<br>$$<br>其中$c,b,x$​为列向量，$W$​为权重矩阵</p>
+<p>Gradient descend(GD, Optimization of Model)：</p>
+<ul>
+<li><p>$\theta$为$b_0,c^T,b,W$等未知参数拼成的一个列向量，针对$L(\theta)$进行优化，其中$L$为损失函数，可以为MAE(Mean Absolute Error)=$\frac{\sum|y_i-y^*|}{n}$,MSE(Mean Squared Error)$=\frac{\sum(y_i-y^*)^2}{n}$</p>
+</li>
+<li><p>Randomly Pick initial values $\theta^0$​</p>
+</li>
+<li><p>根据batch1，计算梯度$g = \nabla L^1(\theta^0)$（$L^1$​为batch1数据对应的损失函数），进一步更新参数$\theta^1 \leftarrow \theta^0-\eta g$​，完成一次update</p>
+</li>
+<li><p>根据batch2，计算梯度$g = \nabla L^2(\theta^1)$​​​（$L^2$​​​为batch2数据对应的损失函数），进一步更新参数$\theta^2 \leftarrow \theta^1-\eta g$​​​​，完成一次update</p>
+</li>
+<li><p>在对n个batch依次update后，即完成一次epoch，因此1 epoch里包含多少次update由Batch Size决定，如果总量N=1000，batch_size=10，则1 epoch中含有100次update</p>
+</li>
+</ul>
+<p>Rectified Linear Unit(<strong>ReLU</strong>):<br>$$<br>y = c\cdot max(0, b+wx_1)<br>$$<br>通过两个ReLU函数叠加可以得到Hard Sigmoid</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/O8Sx3YweLdEj6Gk.png" alt="Snipaste_2021-10-07_18-13-00" style="zoom: 33%;" / loading="lazy">
+
+<p>设Hard Sigmoid函数（上方函数）中间段斜率为$w_0$​​，顶端横线的函数值为$c_0$，则第一个ReLU函数中$w=w_0$​，第二个ReLU函数中$w’=-w_0, b’=b+c_0$​</p>
+<p><strong>激活函数（对数据进行非线性以提高模型拟合性）</strong></p>
+<ul>
+<li>$sigmoid = \frac{1}{1+e^{-x}}$</li>
+<li>$tanh(x) = \frac{e^x-x^{-x}}{e^x+e^{-x}}$​</li>
+<li>$ReLU= max(0, b+wx)$</li>
+</ul>
+<p><strong>每个激活函数相当于一个神经元（neuron），多个neuron构成一个hidden layer，多层hidden layer构成一个Deep Neuron Network（DNN）</strong></p>
+<h2 id="2-Optimization"><a href="#2-Optimization" class="headerlink" title="2. Optimization"></a>2. Optimization</h2><p>模型构建及计算优化通用指南</p>
+<img src="https://i.loli.net/2021/10/08/UDYgLIaCQ7OoiR8.png" alt="General Guide" style="zoom: 33%;" / loading="lazy">
+
+<p>Model Bias(model should be more complex) versus Optimization Issue(worse performance on training data):</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/AOvioSgJMhr3Xke.png" alt="Optimization Issue" style="zoom:33%;" / loading="lazy">
+
+<p>由于56层的网络在训练数据上表现上不如20层网络，所以并不是过拟合问题而是56层网络的优化问题</p>
+<p>解决<strong>Over fitting</strong>问题</p>
+<ul>
+<li>增加数据<ul>
+<li>扩大数据集</li>
+<li>数据增强</li>
+</ul>
+</li>
+<li>对模型进行限制<ul>
+<li>更少的参数，共享参数</li>
+<li>less feature</li>
+<li>Early stopping</li>
+<li>Regularization</li>
+<li>Dropout</li>
+</ul>
+</li>
+</ul>
+<p>Mismatch: training and testing data have different distributions</p>
+<p>兼具batch size较大（不是特别大，利用并行计算的优势提升运算速率，同时一个epoch具有较少的update）时<strong>整体训练速度较快</strong>和准确度，泛化能力的文章：</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/tghqnSZjzdFk3lY.png" alt="Snipaste_2021-10-08_21-49-36" style="zoom: 50%;" / loading="lazy">
+
+<p>Smaller batch size and momentum help escape critical points（saddle point(Hessian matrix have positive eigenvalues and negative eigenvalues) and local minimum）</p>
+<p><strong>GD，SGD，Momentum explanation</strong>: </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/27609238">https://zhuanlan.zhihu.com/p/27609238</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.yuque.com/angsweet/machine-learning/szxhcs">https://www.yuque.com/angsweet/machine-learning/szxhcs</a></li>
+</ul>
+<p>自动调整学习率</p>
+<ul>
+<li><p>AdaGrad：利用Root Mean Square，根据过往的梯度值更新学习率。对于平方累加和而言，学习率会随着算法迭代而逐渐趋于0</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/6bHfoGcWuilUNA3.png" alt="1" style="zoom: 33%;" / loading="lazy"></li>
+<li><p>RMSProp，递归地定义$\sigma$的更新方式</p>
+</li>
+</ul>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/Qw3nRCazyeBojDT.png" alt="image-20211011101909797" style="zoom: 33%;" / loading="lazy">
+
+<p>​    或者可以更加清晰地将算法写为<br>$$<br>\begin{align*}<br>&amp;v_t = \rho v_{t-1}+(1-\rho)*g_t^2\<br>&amp;\Delta w_t = -\frac{\eta}{\sqrt{v_t+\epsilon}}<em>g_t\<br>&amp;w_{t+1} = w_t+\Delta w_t\<br>&amp;\<br>&amp;\eta:Initial<del>Learning</del>rate\<br>&amp;v_t: Exponential<del>Average</del>of<del>squares</del>of<del>gradients\<br>&amp;g_t: Gradient</del>at<del>time</del>t<del>along</del>w<br>\end{align</em>}<br>$$<br>​    参考<a target="_blank" rel="noopener" href="https://www.yuque.com/angsweet/machine-learning/szxhcs#RMSPprop">https://www.yuque.com/angsweet/machine-learning/szxhcs#RMSPprop</a></p>
+<ul>
+<li><p>Adam: RMSProp + Momentum</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/auP8TIqScZH7Glh.png" alt="image-20211011103108804" style="zoom:50%;" / loading="lazy"></li>
+</ul>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211011110817342.png?token=AKP436JD6YTRKW4QARH3KQ3BMOWWI" alt="image-20211011110817342" style="zoom: 50%;" / loading="lazy">
+
+<p>其中提及的Learning rate scheduling包含学习率递减和先增后减（RAdam中使用）两种方式，学习率最终趋于0可以避免由于某一方向的RMS过小而向该方向剧烈移动的现象</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211011112107779.png?token=AKP436J4WMTVIKNNNHVDDGLBMOW54" alt="image-20211011112107779" style="zoom: 50%;" / loading="lazy">
+
+
+
+<h2 id="3-Loss-Function"><a href="#3-Loss-Function" class="headerlink" title="3. Loss Function"></a>3. Loss Function</h2><p>常见的损失函数</p>
+<ul>
+<li><p>Mean Absolute Error(MAE)$~=\frac{\sum|y_i-y^*|}{n}$​​，对应L1 Loss​​​，对异常点的鲁棒性更好</p>
+</li>
+<li><p>Mean Square Error(MSE)$~=\frac{\sum(y_i-y^*)^2}{n}$​​，对应L2 Loss​，对异常点较为敏感</p>
+</li>
+<li><p>Huber（MAE与MSE的结合）：残差大于超参数$\delta$​​时，采用L1的定义，小于超参数$\delta$时，采用L2的定义</p>
+</li>
+<li><p>Cross Entropy（交叉熵Loss）</p>
+</li>
+<li><p>Hinge（SVM中使用的Loss）</p>
+</li>
+<li><p>指数损失函数（Adaboost中使用的Loss）</p>
+</li>
+</ul>
+<p>参考</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/97698386">https://zhuanlan.zhihu.com/p/97698386</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shiyublog/p/10554915.html">https://www.cnblogs.com/shiyublog/p/10554915.html</a></li>
+</ul>
+<p>Minimizing cross-entropy is equivalent to maximizing likelihood，cross-entropy在classification很常见</p>
+<p>当以MSE为Loss函数，sigmoid/softmax为激活函数时，存在初始时参数学习较慢的问题，以及由此常采用交叉熵（cross entropy）损失函数的解释：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://byjiang.com/2017/07/16/Cross_Entropy_Cost_Function/">https://byjiang.com/2017/07/16/Cross_Entropy_Cost_Function/</a></li>
+<li><a target="_blank" rel="noopener" href="https://rohanvarma.me/Loss-Functions/">https://rohanvarma.me/Loss-Functions/</a></li>
+</ul>
+<h2 id="4-Regularization"><a href="#4-Regularization" class="headerlink" title="4. Regularization"></a>4. Regularization</h2><p>正则化，防止过拟合，提升泛化能力</p>
+<h3 id="4-1-L1-amp-L2-regularization-Weight-Decay"><a href="#4-1-L1-amp-L2-regularization-Weight-Decay" class="headerlink" title="4.1 L1 &amp; L2 regularization | Weight Decay"></a>4.1 L1 &amp; L2 regularization | Weight Decay</h3><p><strong>$L_2$正则化</strong>是通过向目标函数添加一个正则项$\frac{1}{2}||w||_2^2$，使权重更接近原点，一般只针对线性系数矩阵$W$，而不针对bias($b$​)，相对应的正则化目标函数为<br>$$<br>\widetilde{J}(w;X,y) = J(w;X,y)+\frac{\alpha}{2}w^Tw<br>$$<br>对应的梯度为<br>$$<br>\nabla_w\widetilde{J}(w;X,y)=\nabla_wJ(w;X,y)+\alpha w<br>$$<br>其中$\alpha$为超参数</p>
+<p><strong>$L_1$正则化</strong>定义为$||w||_1=\sum_i|w_i|$​​，对应的正则化目标函数为<br>$$<br>\widetilde{J}(w;X,y) = J(w;X,y)+\alpha||w||_1<br>$$<br>对应的梯度为<br>$$<br>\nabla_w\widetilde{J}(w;X,y)=\nabla_wJ(w;X,y)+\alpha sign(w)<br>$$<br>其中$sign(w)$取$w$各个元素中的正负号</p>
+<p><strong>$L_1$​与$L_2$​​的区别</strong></p>
+<p>$L_1$相当于$L_2$能够产生更加稀疏的模型，即当$L_1$正则在参数$w$比较小时，可以直接缩减至0，因此可以起到特征选择的作用，相应的技术称之为LASSO，例如当只存在两个线性系数参数$w_1,w_2$时，对于$L_1$​（图左），正则项等值线与没有正则化目标的等值线更容易在轴上有交点，即此时部分系数可以直接为0</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014145315230.png?token=AKP436NCNBDQXX65GL6XSITBM7KBC" alt="image-20211014145315230" style="zoom: 50%;" / loading="lazy">
+
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a">https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.yuque.com/angsweet/machine-learning/shen-du-xue-xi_shen-du-xue-xi_shen-du-xue-xi-zheng-ze-hua_readme#CVN3v">https://www.yuque.com/angsweet/machine-learning/shen-du-xue-xi_shen-du-xue-xi_shen-du-xue-xi-zheng-ze-hua_readme#CVN3v</a></li>
+</ul>
+<h3 id="4-2-Data-Argumentation"><a href="#4-2-Data-Argumentation" class="headerlink" title="4.2 Data Argumentation"></a>4.2 Data Argumentation</h3><p>对数据进行增强，以扩充训练集，从而增强模型的泛化能力</p>
+<p><strong>几何变换</strong></p>
+<ul>
+<li>翻转（flip），水平或垂直翻转</li>
+<li>旋转（Rotation）</li>
+<li>缩放（scale）</li>
+<li>裁剪（crop）</li>
+<li>移位（translation）</li>
+</ul>
+<p><strong>颜色变换</strong></p>
+<ul>
+<li>噪声，常见的为高斯噪声</li>
+<li>模糊</li>
+<li>擦除</li>
+<li>填充</li>
+</ul>
+<p><strong>其他方法：</strong></p>
+<ul>
+<li><p>Random Erase：随机删除一个矩形区域，通过均值填充，可以和random cropping，random flipping一样作为数据增强的方法，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1708.04896">https://arxiv.org/abs/1708.04896</a></p>
+</li>
+<li><p>Cutout：随机删除一个矩形区域，并通过0填充，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1708.04552">https://arxiv.org/abs/1708.04552</a></p>
+</li>
+<li><p>Mixup：将输入图像中的每个像素按比例融合，输出结果（分类结果,one-hot label）按比例融合，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1710.09412">https://arxiv.org/abs/1710.09412</a></p>
+</li>
+<li><p>CutMix：随机删除一个矩形区域，并通过另一张图像的同一位置像素值填充删除了的区域，label根据像素所占比例进行分配，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1905.04899">https://arxiv.org/abs/1905.04899</a></p>
+<p>Mixup，Cutout和CutMix的直观图像：</p>
+<p><img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014155125918.png?token=AKP436N7HOY2NEJF6G6DSW3BM7Q3K" alt="image-20211014155125918" loading="lazy"></p>
+</li>
+<li><p>Mosaic：随机选取4张图片，进行随机位置的裁剪拼接，将4张图片合成新图片，在YoloV4的论文中提出</p>
+</li>
+<li><p>AutoAugment：不同于常规的人工设计图像增强方式，AutoAugment 是在一系列图像增强子策略的搜索空间中通过搜索算法找到的适合特定数据集的图像增强方案。即直接在数据集上搜索针对该数据集的最优策略。当针对越大的模型，越大的数据集，使用AutoAugment搜索到的增强方式产生的收益也就越小；同时搜索结果迁移能力较差，针对某一数据集的搜索结果不适合迁移到其他数据集上，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1805.09501v1">https://arxiv.org/abs/1805.09501v1</a></p>
+</li>
+<li><p>RandAugment：与AutoAugment中以特定的概率确定是否使用某种子策略相比，RandAugment中所有的子策略都会以同样的概率被选择到，论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1909.13719.pdf">https://arxiv.org/pdf/1909.13719.pdf</a></p>
+</li>
+</ul>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/61759947">https://zhuanlan.zhihu.com/p/61759947</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/irving512/article/details/113846570">https://blog.csdn.net/irving512/article/details/113846570</a></li>
+</ul>
+<p>可以直接利用的数据增强库：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/aleju/imgaug">https://github.com/aleju/imgaug</a></p>
+<h3 id="4-3-Dropout-amp-DropConnect-amp-DropBlock"><a href="#4-3-Dropout-amp-DropConnect-amp-DropBlock" class="headerlink" title="4.3 Dropout &amp; DropConnect &amp; DropBlock"></a>4.3 Dropout &amp; DropConnect &amp; DropBlock</h3><p>在前向传播的时候，让某个神经元的激活值以一定的概率p停止工作，这样可以使模型泛化性更强，因为它不会太依赖某些局部的特征</p>
+<img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014163119916.png?token=AKP436NX3MSMQBZB64M2DW3BM7VQ4" alt="image-20211014163119916" style="zoom: 50%;" / loading="lazy">
+
+<p>论文参考：<a target="_blank" rel="noopener" href="https://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf">https://www.cs.toronto.edu/~rsalakhu/papers/srivastava14a.pdf</a></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://towardsdatascience.com/12-main-dropout-methods-mathematical-and-visual-explanation-58cdc2112293">https://towardsdatascience.com/12-main-dropout-methods-mathematical-and-visual-explanation-58cdc2112293</a></p>
+<p><strong>待补充：Gaussian Dropout, Pooling Dropout, Spatial Dropout</strong></p>
+<p>Dropout就是对某个隐藏层的输出进行随机置0，而DropConnect则是对于某个隐藏层的输入权重进行随机置0</p>
+<p><img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014163534126.png?token=AKP436KAW2BUJ6Q6MDMBLT3BM7WA2" alt="image-20211014163534126" loading="lazy"></p>
+<p><img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014170624544.png" alt="image-20211014170624544" loading="lazy"></p>
+<p>DropConnect与Dropout只能用于全连接的网络层</p>
+<p>论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1906.04569.pdf">https://arxiv.org/pdf/1906.04569.pdf</a></p>
+<p>DropBlock是一种结构化的dropout形式，它将feature map相邻区域中的单元放在一起drop掉。dropout的主要缺点是它随机drop特征。虽然这对于全连接层是有效的，但是对于卷积层则是无效的，因为<strong>卷积层的特征在空间上是相关的</strong>。当这些特性相互关联时，即使有dropout，有关输入的信息仍然可以发送到下一层，这会导致网络overfit。所以需要引入DropBlock</p>
+<p><img src="https://raw.githubusercontent.com/JOEYE153/Images/master/image-20211014170719869.png" alt="image-20211014170719869" loading="lazy"></p>
+<p>论文参考：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/1810.12890">https://arxiv.org/abs/1810.12890</a></p>
+<h3 id="4-4-Early-Stopping"><a href="#4-4-Early-Stopping" class="headerlink" title="4.4 Early Stopping"></a>4.4 Early Stopping</h3><p>因为我们在初始化网络的时候一般都是初始为较小的权值。训练时间越长，部分网络权值可能越大。如果我们在合适时间停止训练，就可以将网络的能力限制在一定范围内。</p>
+<p>具体做法为在每一个Epoch结束时（一个Epoch集为对所有的训练数据的一轮遍历）计算validation data的accuracy，当accuracy不再提高时，就停止训练。</p>
+<h2 id="5-Normalization"><a href="#5-Normalization" class="headerlink" title="5. Normalization"></a>5. Normalization</h2></div><ul class="post-copyright"><li class="post-copyright-author"><strong>Post author: </strong>Joeye</li><li class="post-copyright-link"><strong>Post link: </strong><a href="http://joeye153.github.io/2021/10/14/DL-Intro/" title="DL Intro">http://joeye153.github.io/2021/10/14/DL-Intro/</a></li><li class="post-copyright-license"><strong>Copyright Notice: </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener" title="CC BY-NC-SA 4.0 "><svg class="icon"><use xlink:href="#icon-creative-commons-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-by-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-nc-line"></use></svg><svg class="icon"><use xlink:href="#icon-creative-commons-sa-line"></use></svg></a> unless otherwise stated.</li></ul></section></article><div class="post-nav"><div class="post-nav-item"></div><div class="post-nav-item"><a class="post-nav-next" href="/2021/09/26/retest/" rel="next" title="BUAA SCSE 数理及核专笔记"><span class="post-nav-text">BUAA SCSE 数理及核专笔记</span><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-right-s-line"></use></svg></a></div></div></div><div class="hty-card" id="comment"><div class="comment-tooltip text-center"><span>要不要和我说些什么？</span><br></div></div></main><footer class="sidebar-translate" id="footer"><div class="copyright"><span>&copy; 2021 </span><span class="with-love" id="animate"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-cloud-line"></use></svg></span><span class="author"> Joeye</span></div><div class="powered"><span>Powered by <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> v5.4.0</span><span class="footer-separator">|</span><span>Theme - <a rel="noopener" href="https://github.com/YunYouJun/hexo-theme-yun" target="_blank"><span>Yun</span></a> v1.6.1</span></div></footer><a class="hty-icon-button" id="back-to-top" aria-label="back-to-top" href="#"><svg class="icon" aria-hidden="true"><use xlink:href="#icon-arrow-up-s-line"></use></svg><svg class="progress-circle-container" viewBox="0 0 100 100"><circle class="progress-circle" id="progressCircle" cx="50" cy="50" r="48" fill="none" stroke="#0078E7" stroke-width="2" stroke-linecap="round"></circle></svg></a></div></body></html>
